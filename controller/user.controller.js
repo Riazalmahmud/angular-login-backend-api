@@ -89,15 +89,15 @@ exports.updateUser = async (req, res, next) => {
 }
 */
 exports.findUser = async (req, res, next) => {
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    if (!userName || !password) {
+    if (!email || !password) {
       return res
         .status(400)
         .json({ status: false, massage: "email and password are required" });
     }
-    const user = await getUserService(userName);
+    const user = await getUserService(email);
     console.log(user);
     if (!user) {
       return res.status(401).json({
@@ -134,14 +134,15 @@ exports.findUser = async (req, res, next) => {
 
 
 /* * get user information
-get : http://localhost:3000/api/v1/user/me
+get : http://localhost:3000/api/v1/user/getMe
 @param :{
   Authorization: Bearer <token>
 }
  */
 exports.getMe = async (req, res) => {
+  console.log(req);
   try {
-    const user = await getUserService(req?.user?.userName);
+    const user = await getUserService(req?.user?.email);
     const { password: pwd, ...others } = user.toObject();
     res.status(200).json({
       status: "success",

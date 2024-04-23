@@ -2,9 +2,8 @@ const  jwt = require('jsonwebtoken');
 
 exports.generateToken = (userInfo)=>{
     const payLoad = {
-        userName:userInfo.userName,
+        email:userInfo.email,
     }
-
     const token = jwt.sign(payLoad, process.env.TOKEN, {
         expiresIn: "7days",
     });
